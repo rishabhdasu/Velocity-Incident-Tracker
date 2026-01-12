@@ -1,0 +1,12 @@
+{
+  "name": "velocity",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npm run dev --prefix frontend"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
