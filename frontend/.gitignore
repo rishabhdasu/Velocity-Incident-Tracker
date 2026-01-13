@@ -1,24 +1,33 @@
-# Logs
+# --- Dependencies (Recursive) ---
+node_modules
+**/node_modules
+
+# --- Security & Secrets (Comprehensive) ---
+.env
+**/.env
+.env*.local
+**/.env*.local
+
+# --- Build & Output ---
+dist
+dist-ssr
+build
+out
+.next
+
+# --- Logs & OS Junk ---
 logs
 *.log
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+.DS_Store
+Thumbs.db
 
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
+# --- System/Editor ---
 .vscode/*
 !.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+.idea/
+*.swp
+
+# --- Uploads (Keep folder structure, ignore content) ---
+backend/uploads/*
+!backend/uploads/.gitkeep
