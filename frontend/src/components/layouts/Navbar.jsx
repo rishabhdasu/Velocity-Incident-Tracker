@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { NAV_LINKS } from "../../utils/navData";
 import { IoIosArrowDropdown } from "react-icons/io";
 import { AiFillThunderbolt } from "react-icons/ai";
+import SideMenu from "./SideMenu";
 
 const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
   return (
-    <nav className="flex justify-between py-3 px-10 bg-primary text-white shadow-md">
+    <nav className="flex justify-between py-3 px-10 bg-primary text-white shadow-md top-0 sticky">
       <NavLink
         to="/"
         className="font-bold flex items-center gap-1 text-yellow-300 tracking-tight text-xl"
@@ -33,10 +35,20 @@ const Navbar = () => {
           </li>
         ))}
       </ul>
-      <button className="flex items-center gap-1 cursor-pointer hover:text-gray-200">
-        <IoIosArrowDropdown />
-        <span>Rishabh</span>
-      </button>
+      <div className="relative">
+        <button
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
+          className="flex items-center gap-1 cursor-pointer hover:text-gray-200"
+        >
+          <IoIosArrowDropdown
+            className={`transition-transform ${isOpen ? "rotate-180" : ""}`}
+          />
+          <span>Rishabh</span>
+        </button>
+        {isOpen && <SideMenu />}
+      </div>
     </nav>
   );
 };

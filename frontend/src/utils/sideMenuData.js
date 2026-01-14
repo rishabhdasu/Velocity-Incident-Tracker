@@ -3,17 +3,17 @@ import { LuSettings, LuUser, LuLogOut } from "react-icons/lu";
 export const SIDE_MENU_DATA = [
   {
     id: "01",
-    path: "/profile",
-    icon: "LuUser",
+    icon: LuUser,
+    label: "Profile",
   },
   {
     id: "02",
-    path: "/setting",
-    icon: "LuSettings",
+    icon: LuSettings,
+    label: "Settings",
   },
   {
     id: "03",
-    path: "/login",
-    icon: "LuLogout",
+    icon: LuLogOut,
+    label: "Logout",
   },
 ];
