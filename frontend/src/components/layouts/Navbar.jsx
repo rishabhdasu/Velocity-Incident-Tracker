@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { NAV_LINKS } from "../../utils/navData";
 import { IoIosArrowDropdown } from "react-icons/io";
@@ -7,6 +7,20 @@ import SideMenu from "./SideMenu";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
   return (
     <nav className="flex justify-between py-3 px-10 bg-primary text-white shadow-md top-0 sticky">
       <NavLink
@@ -35,7 +49,7 @@ const Navbar = () => {
           </li>
         ))}
       </ul>
-      <div className="relative">
+      <div className="relative" ref={menuRef}>
         <button
           onClick={() => {
             setIsOpen(!isOpen);
