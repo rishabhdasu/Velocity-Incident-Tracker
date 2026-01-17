@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 
 const IncidentSchema = new mongoose.Schema(
   {
+    asset: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Assets",
+      required: true,
+    },
     title: { type: String, required: true },
     description: { type: String, required: true },
     status: {
@@ -9,10 +14,9 @@ const IncidentSchema = new mongoose.Schema(
       enum: ["open", "in-progress", "closed", "pending", "on-hold"],
       default: "open",
     },
-    serial_number: { type: String, required: true, uppercase: true },
     priority: { type: String, enum: ["low", "medium", "high", "critical"] },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = mongoose.model("Incident", IncidentSchema);
