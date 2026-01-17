@@ -1,5 +1,5 @@
-const Incidents = require("../models/Incidents");
-const Assets = require("../models/Assets");
+const Incident = require("../models/Incident");
+const Asset = require("../models/Asset");
 
 exports.Incidents = async (req, res) => {
   try {
@@ -13,7 +13,7 @@ exports.Incidents = async (req, res) => {
         .status(404)
         .json({ message: "Asset not found. Cannot create Incident" });
     }
-    const newIncident = new Incidents({
+    const newIncident = new Incident({
       title,
       description,
       status,

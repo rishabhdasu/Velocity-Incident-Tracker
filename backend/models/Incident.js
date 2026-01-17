@@ -4,7 +4,7 @@ const IncidentSchema = new mongoose.Schema(
   {
     asset: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Assets",
+      ref: "Asset",
       required: true,
     },
     title: { type: String, required: true },
