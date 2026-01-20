@@ -27,7 +27,8 @@ exports.createIncident = async (req, res) => {
       .status(201)
       .json({ message: "Incident successfuly created", newIncident });
   } catch (err) {
-    res.status(500).json({
+    console.error("Create Incident Error:", err);
+    return res.status(500).json({
       message: " Internal Server Error. Please try again",
     });
   }

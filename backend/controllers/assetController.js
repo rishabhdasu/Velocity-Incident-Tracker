@@ -5,7 +5,7 @@ exports.addAsset = async (req, res) => {
   try {
     const { serialNumber, status, assetName, installedDate } = req.body;
     if (!serialNumber || !status || !assetName || !installedDate) {
-      return res.status(401).json({ message: "All fields are required" });
+      return res.status(400).json({ message: "All fields are required" });
     }
     const newAsset = new Asset({
       serialNumber,
@@ -16,7 +16,8 @@ exports.addAsset = async (req, res) => {
     await newAsset.save();
     res.status(201).json({ message: "Asset added successfully", newAsset });
   } catch (err) {
-    res.status(500).json({ message: "Server Error" });
+    console.error("ADD_ASSET_ERROR:", err);
+    return res.status(500).json({ message: "Server Error" });
   }
 };
 
@@ -51,6 +52,9 @@ exports.downloadAssetExcel = async (req, res) => {
     res.setHeader("Content-Disposition", "attachment; filename=assets.xlsx");
     return res.send(buffer);
   } catch (err) {
-    res.status(500).json({ message: "Something went wrong, please try again" });
+    console.error("Add Asset Error:", err);
+    return res
+      .status(500)
+      .json({ message: "Something went wrong, please try again" });
   }
 };

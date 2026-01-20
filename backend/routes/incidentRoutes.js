@@ -7,8 +7,8 @@ const {
 
 const router = express.Router();
 
-router.post("/add", createIncident);
-router.get("/get", getAllIncident);
+router.post("/create", createIncident);
+router.get("/all", getAllIncident);
 router.get("/downloadexcel", downloadIncidentExcel);
 
 module.exports = router;
