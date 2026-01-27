@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../utils/axiosInstance";
 import { API_PATHS } from "../utils/apiPaths";
+import { LuPlus } from "react-icons/lu";
+import Modal from "../components/Modal";
 
 const Incident = () => {
   const [incidents, setIncidents] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+
   const STATUS_STYLES = {
     open: "bg-red-100 text-red-700 border-red-200",
     "in-progress": "bg-blue-100 text-blue-700 border-blue-200",
@@ -42,6 +46,24 @@ const Incident = () => {
 
   return (
     <div className="p-8 bg-gray-50 min-h-screen">
+      <div className="flex justify-between items-center mb-6">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-800">
+            Incident Management
+          </h1>
+          <p className="text-sm text-gray-500">
+            Track and manage system issues
+          </p>
+        </div>
+        <button
+          className="btn-primary"
+          type="button"
+          onClick={() => setOpenModal(true)}
+        >
+          <LuPlus size={20} />
+          Create Incident
+        </button>
+      </div>
       <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
         <table className="w-full text-left border-collapse">
           <thead className="w-full text-left border-collapsebg-gray-100 uppercase text-xs font-semibold text-gray-600">
@@ -92,6 +114,7 @@ const Incident = () => {
           </div>
         )}
       </div>
+      {openModal && <Modal onClose={() => setOpenModal(false)} />}
     </div>
   );
 };
