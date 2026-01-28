@@ -18,6 +18,9 @@
     color: #1f2937;
     overflow-x: hidden;
   }
+  button {
+    cursor: pointer;
+  }
 }
 
 @layer components {
@@ -27,6 +30,10 @@
     @apply transition-all duration-200;
     @apply hover:brightness-90 hover:shadow-lg;
     @apply active:scale-95;
+    @apply disabled:opacity-50 disabled:pointer-events-none cursor-pointer;
+  }
+  .btn-secondary {
+    @apply flex items-center justify-center gap-2 px-6 py-2.5;
     @apply disabled:opacity-50 disabled:pointer-events-none cursor-pointer;
   }
 }
