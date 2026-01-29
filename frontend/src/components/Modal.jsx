@@ -1,4 +1,5 @@
 import React from "react";
+import CreateIncidentForm from "./Inputs/CreateIncidentForm";
 
 const Modal = ({ onClose }) => {
   return (
@@ -18,7 +19,7 @@ const Modal = ({ onClose }) => {
         </div>
 
         <div className="p-6">
-          <p className="text-gray-600">Form coming soon...</p>
+          <CreateIncidentForm />
         </div>
 
         <div className="p-6 border-t border-gray-100 bg-gray-50/50 flex justify-end gap-3">

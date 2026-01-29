@@ -68,6 +68,7 @@ const Incident = () => {
         <table className="w-full text-left border-collapse">
           <thead className="w-full text-left border-collapsebg-gray-100 uppercase text-xs font-semibold text-gray-600">
             <tr>
+              <th className="px-6 py-4">Incident Number</th>
               <th className="px-6 py-4">Serial Number</th>
               <th className="px-6 py-4">Title</th>
               <th className="px-6 py-4">Description</th>
