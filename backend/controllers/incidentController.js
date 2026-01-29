@@ -1,26 +1,21 @@
 const Incident = require("../models/Incident");
 const Asset = require("../models/Asset");
 const xlsx = require("xlsx");
+const Counter = require("../models/Counter");
 
 // Create Incident Controller
 exports.createIncident = async (req, res) => {
   try {
-    const { serialNumber, title, description, status, priority } = req.body;
-    if (!serialNumber || !title || !description || !status || !priority) {
+    const { assetId, title, description, status, priority } = req.body;
+    if (!assetId || !title || !description || !status || !priority) {
       res.status(400).json({ message: "All fields are required" });
-    }
-    const existingAsset = await Asset.findOne({ serialNumber });
-    if (!existingAsset) {
-      return res
-        .status(404)
-        .json({ message: "Asset not found. Cannot create Incident" });
     }
     const newIncident = new Incident({
       title,
       description,
       status,
       priority,
-      asset: existingAsset._id,
+      asset: assetId,
     });
     await newIncident.save();
     res
