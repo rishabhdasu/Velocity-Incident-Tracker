@@ -1,13 +1,14 @@
-export const BASE_URL = "http://localhost:8000/";
+export const BASE_URL = "http://localhost:8000/api/v1";
 
 // utils/apiPaths.js
 export const API_PATHS = {
   ASSETS: {
-    ADD_ASSET: "/api/v1/assets/create",
-    GET_ALL_ASSET: "/api/v1/assets/all",
+    ADD_ASSET: "/assets/create",
+    GET_ALL_ASSET: "/assets/all",
   },
   INCIDENTS: {
-    CREATE_INCIDENTS: "/api/v1/incidents/create",
-    GET_ALL_INCIDENTS: "/api/v1/incidents/all",
+    CREATE_INCIDENTS: "/incidents/create",
+    GET_ALL_INCIDENTS: "/incidents/all",
+    GET_PREVIEW: "/incidents/preview-number",
   },
 };

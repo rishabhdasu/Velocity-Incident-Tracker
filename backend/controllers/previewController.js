@@ -1,7 +1,6 @@
 const Counter = require("../models/Counter");
 
 exports.previewController = async (req, res) => {
-  console.log("Preview COntroller");
   try {
     const counter = await Counter.findOne({ id: "incident_seq" });
     const currSeq = counter ? counter.seq : 1000;
