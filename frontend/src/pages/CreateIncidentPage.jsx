@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../utils/axiosInstance";
-import { previewController } from "../../../backend/controllers/previewController";
+import { API_PATHS } from "../utils/apiPaths";
 
 const CreateIncidentPage = () => {
   const [previewNum, setPreviewNum] = useState("Loading...");
   const fetchPreviewNumber = async () => {
     try {
-      const previewNumber = await axiosInstance.get(previewController);
-      setPreviewNum(previewNumber);
+      const response = await axiosInstance.get(API_PATHS.INCIDENTS.GET_PREVIEW);
+      setPreviewNum(response.data.nextIncidentNumber);
     } catch (err) {
       console.error("Unable to fetch Preview Number", err);
       setPreviewNum(" ");

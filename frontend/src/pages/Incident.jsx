@@ -3,11 +3,14 @@ import axiosInstance from "../utils/axiosInstance";
 import { API_PATHS } from "../utils/apiPaths";
 import { LuPlus } from "react-icons/lu";
 import Modal from "../components/Modal";
+import { useNavigate } from "react-router-dom";
 
 const Incident = () => {
   const [incidents, setIncidents] = useState([]);
   const [loading, setLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+
+  const navigate = useNavigate();
 
   const STATUS_STYLES = {
     open: "bg-red-100 text-red-700 border-red-200",
@@ -58,7 +61,7 @@ const Incident = () => {
         <button
           className="btn-primary"
           type="button"
-          onClick={() => setOpenModal(true)}
+          onClick={() => navigate("/incidents/create")}
         >
           <LuPlus size={20} />
           Create Incident

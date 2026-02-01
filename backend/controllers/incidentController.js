@@ -65,6 +65,6 @@ exports.downloadIncidentExcel = async (req, res) => {
     );
     return res.send(buffer);
   } catch (err) {
-    res.status(500).json({ message: "Seomthing went wrong. Please try again" });
+    res.status(500).json({ message: "Something went wrong. Please try again" });
   }
 };
