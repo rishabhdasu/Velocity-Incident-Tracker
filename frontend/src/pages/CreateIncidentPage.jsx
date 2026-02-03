@@ -26,7 +26,6 @@ const CreateIncidentPage = () => {
         `${API_PATHS.ASSETS.FIND_BY_SERIAL}/${searchSerial}`,
       );
       setAssetFound(response.data);
-      console.log("rishabh");
     } catch (err) {
       console.error("Search failed", err);
       setAssetFound(null);

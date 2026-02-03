@@ -23,8 +23,20 @@ exports.addAsset = async (req, res) => {
 
 exports.getAllAsset = async (req, res) => {
   try {
-    const asset = await Asset.findOne();
-    console.log(asset);
+    const asset = await Asset.find();
+    return res.status(200).json(asset);
+  } catch (err) {
+    res.status(500).json({ message: "Something went wrong, please try again" });
+  }
+};
+
+exports.getAssetBySerial= async (req, res) => {
+  try {
+    const {serialNumber } = req.params;
+    const asset = await Asset.findOne({serialNumber: serialNumber.trim().toUpperCase()});
+      if (!asset) {
+      return res.status(404).json({ message: "Asset not found" });
+    }
     return res.status(200).json(asset);
   } catch (err) {
     res.status(500).json({ message: "Something went wrong, please try again" });
@@ -60,11 +72,4 @@ exports.downloadAssetExcel = async (req, res) => {
   }
 };
 
-// exports.findAssetBySerial = async(req,res) => {
-//   try{
-//     const asset = await Asset.findById(req.)
-//   }
-//   catch(err) {
-//     res.status(404).json({mesage: "Search failed"})
-//   }
-// }
+

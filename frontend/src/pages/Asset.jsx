@@ -7,7 +7,7 @@ const Asset = () => {
   const [loading, setLoading] = useState(false);
 
   const fetchAllAssets = async () => {
-    if (loading) setLoading(true);
+   setLoading(true);
     try {
       const response = await axiosInstance.get(
         `${API_PATHS.ASSETS.GET_ALL_ASSET}`,
@@ -26,7 +26,7 @@ const Asset = () => {
 
   return (
     <div className="p-8 bg-gray-50 min-h-screen">
-      <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+      {loading ? "Loading Assets...": (<div className="max-w-6xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
         <table className="w-full text-left border-collapse">
           <thead className="w-full text-left border-collapsebg-gray-100 uppercase text-xs font-semibold text-gray-600">
             <tr>
@@ -69,7 +69,7 @@ const Asset = () => {
             No assets found in the system.
           </div>
         )}
-      </div>
+      </div>)}
     </div>
   );
 };

@@ -5,6 +5,7 @@ export const API_PATHS = {
   ASSETS: {
     ADD_ASSET: "/assets/create",
     GET_ALL_ASSET: "/assets/all",
+    FIND_BY_SERIAL: "/assets/find",
   },
   INCIDENTS: {
     CREATE_INCIDENTS: "/incidents/create",
