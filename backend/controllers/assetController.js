@@ -3,15 +3,46 @@ const xlsx = require("xlsx");
 
 exports.addAsset = async (req, res) => {
   try {
-    const { serialNumber, status, assetName, installedDate } = req.body;
-    if (!serialNumber || !status || !assetName || !installedDate) {
+    const { serialNumber,
+      assetName,
+      status,
+      installedDate,
+      siteName,
+      streetAddress1,
+      streetAddress2,
+      building,
+      room,
+      floor,
+      city,
+      state,
+      postalCode,
+      country, } = req.body;
+    if (!serialNumber ||
+      !assetName ||
+      !installedDate ||
+      !siteName ||
+      !streetAddress1 ||
+      !city ||
+      !state ||
+      !postalCode ||
+      !country) {
       return res.status(400).json({ message: "All fields are required" });
     }
     const newAsset = new Asset({
       serialNumber,
-      status,
       assetName,
+      status,
       installedDate,
+      siteName,
+      streetAddress1,
+      streetAddress2,
+      building,
+      room,
+      floor,
+      city,
+      state,
+      postalCode,
+      country,
     });
     await newAsset.save();
     res.status(201).json({ message: "Asset added successfully", newAsset });

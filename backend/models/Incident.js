@@ -24,27 +24,27 @@ const IncidentSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-IncidentSchema.pre("save", async function (next) {
-  const doc = this;
 
-  // Only run this if the incident is new
-  if (doc.isNew) {
-    try {
-      // Find the "incident_seq" and increment it by 1
-      const counter = await Counter.findOneAndUpdate(
+IncidentSchema.pre("save", async function () {
+  if (this.isNew) {
+    let counter = await Counter.findOne({ id: "incident_seq" });
+
+    if (!counter) {
+      counter = await Counter.create({ 
+        id: "incident_seq", 
+        seq: 100001, 
+        series: "A" 
+      });
+    } else {
+      counter = await Counter.findOneAndUpdate(
         { id: "incident_seq" },
         { $inc: { seq: 1 } },
-        { new: true, upsert: true }, // Create it if it doesn't exist
+        { new: true }
       );
-
-      // Set the incidentNumber (e.g., INC-1001)
-      doc.incidentNumber = `INC-${counter.seq}`;
-      next();
-    } catch (error) {
-      next(error);
     }
-  } else {
-    next();
+
+    const paddedSeq = String(counter.seq).padStart(6, "0");
+    this.incidentNumber = `J${counter.series}${paddedSeq}`;
   }
 });
 
