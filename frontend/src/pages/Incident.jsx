@@ -87,6 +87,9 @@ const Incident = () => {
                 className="hover:bg-blue-50 transition-colors border-gray-200 border-2"
               >
                 <td className="px-6 py-4 font-medium text-gray-900">
+                  {inc.incidentNumber}
+                </td>
+                <td className="px-6 py-4 font-medium text-gray-900">
                   {inc.asset.serialNumber}
                 </td>
                 <td className="px-6 py-4 text-gray-700">{inc.title}</td>

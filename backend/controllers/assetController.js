@@ -53,7 +53,7 @@ exports.addAsset = async (req, res) => {
 };
 
 exports.getAllAsset = async (req, res) => {
-  try {
+  try { 
     const asset = await Asset.find();
     return res.status(200).json(asset);
   } catch (err) {
