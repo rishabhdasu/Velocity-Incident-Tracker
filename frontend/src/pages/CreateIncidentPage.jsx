@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../utils/axiosInstance";
 import { API_PATHS } from "../utils/apiPaths";
+import Input from "../components/Inputs/Input";
 
 const CreateIncidentPage = () => {
   const [previewNum, setPreviewNum] = useState("Loading...");
@@ -39,39 +40,60 @@ const CreateIncidentPage = () => {
   }, []);
 
   return (
-    <div className="p-4 max-w-6xl mx-auto">
-      <h2 className="text-m font-bold text-primary">
-        New Incident: <span className="text-black">{previewNum}</span>
-      </h2>
-      <div className="Link-Asset mt-2">
-        <h3 className="text-gray-500">Link an Asset</h3>
-        <div className="flex">
-          <div className="Left-Column flex flex-col">
-            <label>Asset Name</label>
-            <input
-              readOnly
-              placeholder="Asset Name"
-              value={assetFound?.assetName || ""}
-              className="bg-gray-50 border p-2.5 rounded-lg text-gray-500 cursor-not-allowed"
-            />
-            <label>Serial Number</label>
-            <input
-              type="text"
-              placeholder="Enter Serial Number"
-              value={searchSerial}
-              onChange={(e) => setSearchSerial(e.target.value.toUpperCase())}
-            />
-            <button
-              className="btn-primary p-1"
-              type="button"
-              onClick={handleAssetFind}
-            >
-              {loading ? "..." : "Find"}
-            </button>
-          </div>
-          <div></div>
+  <div className="bg-gray-50 min-h-screen pb-10">
+  {/* TOP HEADER */}
+  <div className="p-4 px-6">
+    <h1 className="text-xl font-bold text-primary">
+      New Incident: <span className="text-gray-900 font-mono">{previewNum}</span>
+    </h1>
+  </div>
+
+  {/* ASSET LOOKUP CONTAINER */}
+  <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6 m-4 mt-0">
+    <h3 className="text-[10px] font-bold uppercase text-gray-400 mb-6 tracking-[0.15em]">
+      Asset LookUp
+    </h3>
+    
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-3">
+      {/* COLUMN 1: INTERACTION */}
+      <div className="flex flex-col h-full">
+        <div className="space-y-3">
+          <Input
+            label="Asset Name" 
+            value={assetFound?.assetName || ""} 
+            readOnly 
+          />
+          
+          <Input 
+            label="Serial Number" 
+            value={searchSerial}
+            onChange={(e) => setSearchSerial(e.target.value.toUpperCase())}
+            placeholder="AKJD88723"
+          />
+        </div>
+
+        <div className="mt-auto flex justify-end pt-4">
+          <button onClick={handleAssetFind} className="btn-primary py-1.5 px-10 text-xs uppercase h-9">
+            {loading ? "..." : "Find"}
+          </button>
         </div>
       </div>
+
+      {/* COLUMN 2: CONTEXT */}
+      <div className="space-y-3">
+        <Input label="Site Name" value={assetFound?.siteName || ""} readOnly />
+        <Input label="Device Status" value={assetFound?.status || ""} readOnly className="font-bold" />
+        <Input label="City / Region" value={assetFound?.city || ""} readOnly />
+      </div>
+    </div>
+  </div>
+
+  {/* INCIDENT DETAILS CONTAINER */}
+  <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6 m-4">
+    <h3 className="text-[10px] font-bold uppercase text-gray-400 mb-6 tracking-[0.15em]">
+      Incident Details
+    </h3>
+  </div>
     </div>
   );
 };
