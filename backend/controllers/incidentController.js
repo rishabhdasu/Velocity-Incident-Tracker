@@ -13,8 +13,8 @@ exports.createIncident = async (req, res) => {
     const newIncident = new Incident({
       title,
       description,
-      status,
-      priority,
+      status : status.toLowerCase(),
+      priority : priority.toLowerCase(),
       asset: assetId,
     });
     await newIncident.save();
@@ -32,7 +32,7 @@ exports.createIncident = async (req, res) => {
 // Get All Incidents
 exports.getAllIncident = async (req, res) => {
   try {
-    const allIncidents = await Incident.find().populate("asset");
+    const allIncidents = (await Incident.find().populate("asset").sort({createdAt: -1}));
     res.status(200).json(allIncidents);
   } catch (err) {
     res.status(500).json({ message: "Something went wrong. Please try again" });

@@ -2,10 +2,21 @@ import React, { useEffect, useState } from "react";
 import axiosInstance from "../utils/axiosInstance";
 import { API_PATHS } from "../utils/apiPaths";
 import Input from "../components/Inputs/Input";
+import Select from "../components/Inputs/Select";
+import { useNavigate } from "react-router-dom";
 
 const CreateIncidentPage = () => {
+  const navigate = useNavigate();
   const [previewNum, setPreviewNum] = useState("Loading...");
   const [searchSerial, setSearchSerial] = useState("");
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    status: "Open",
+    priority: "Medium"
+  });
+const PRIORITY_OPTIONS = ["Low", "Medium", "High", "Critical"];
+const STATUS_OPTIONS = ["Open", "In-Progress", "Pending", "On-Hold"];
   const [assetFound, setAssetFound] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -19,6 +30,13 @@ const CreateIncidentPage = () => {
     }
   };
 
+  const handleInputChange = (field, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field] : value
+    }))
+  }
+
   const handleAssetFind = async () => {
     if (!searchSerial) return alert("Enter a Serial Number");
     setLoading(true);
@@ -27,6 +45,7 @@ const CreateIncidentPage = () => {
         `${API_PATHS.ASSETS.FIND_BY_SERIAL}/${searchSerial}`,
       );
       setAssetFound(response.data);
+      handleInputChange("assetId", response.data._id);
     } catch (err) {
       console.error("Search failed", err);
       setAssetFound(null);
@@ -34,6 +53,20 @@ const CreateIncidentPage = () => {
       setLoading(false);
     }
   };
+
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+   if(!formData.assetId) return alert("Please link an Asset to create an incident");
+   try {
+    const res = await axiosInstance.post(API_PATHS.INCIDENTS.CREATE_INCIDENTS, formData);
+    alert("Ticket Created Successfully:" + res.data.newIncident.incidentNumber);
+    navigate("/incidents")
+   }
+   catch(err) {
+    console.error(err);
+    alert("Failed to create ticket")
+   }
+  }
 
   useEffect(() => {
     fetchPreviewNumber();
@@ -93,6 +126,37 @@ const CreateIncidentPage = () => {
     <h3 className="text-[10px] font-bold uppercase text-gray-400 mb-6 tracking-[0.15em]">
       Incident Details
     </h3>
+    <div>
+      <form>
+        <Input  type="text"
+        label="Incident Title"
+        value={formData.title}
+        onChange={(e) => handleInputChange("title", e.target.value)}
+        placeholder="Incident Title"
+        />
+        <Input  type="textarea"
+        label="Incident Description"
+        value={formData.description}
+        onChange={(e) => handleInputChange("description", e.target.value)}
+        placeholder="Incident Description"
+        />
+        <div className="grid grid-cols-2 gap-4">
+      <Select 
+      label="Priority"
+      options={PRIORITY_OPTIONS}
+      value={formData.priority}
+      onChange={(e) => handleInputChange("priority", e.target.value)}
+    />
+    <Select
+      label="Status"
+      options={STATUS_OPTIONS}
+      value={formData.status}
+      onChange={(e) => handleInputChange("status", e.target.value)}
+    />
+  </div>
+  <button className="btn-primary" onClick={handleSubmit}>Create Incident</button>
+  </form>
+    </div>
   </div>
     </div>
   );
