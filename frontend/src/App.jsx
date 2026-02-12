@@ -5,9 +5,11 @@ import Home from "./pages/Home";
 import Incident from "./pages/Incident";
 import Asset from "./pages/Asset";
 import CreateIncidentPage from "./pages/CreateIncidentPage";
+import {Toaster} from "react-hot-toast"
 
 const App = () => {
   return (
+    <>
     <Routes>
       <Route element={<DashboardLayout />}>
         <Route path="/" element={<Home />} />
@@ -16,6 +18,8 @@ const App = () => {
         <Route path="/assets" element={<Asset />} />
       </Route>
     </Routes>
+    <Toaster/>
+    </>
   );
 };
 

@@ -4,9 +4,11 @@ import { API_PATHS } from "../utils/apiPaths";
 import Input from "../components/Inputs/Input";
 import Select from "../components/Inputs/Select";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const CreateIncidentPage = () => {
   const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [previewNum, setPreviewNum] = useState("Loading...");
   const [searchSerial, setSearchSerial] = useState("");
   const [formData, setFormData] = useState({
@@ -56,15 +58,19 @@ const STATUS_OPTIONS = ["Open", "In-Progress", "Pending", "On-Hold"];
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-   if(!formData.assetId) return alert("Please link an Asset to create an incident");
+   if(!formData.assetId) return toast.error("Please link an Asset to create an incident");
+   setIsSubmitting(true);
    try {
     const res = await axiosInstance.post(API_PATHS.INCIDENTS.CREATE_INCIDENTS, formData);
-    alert("Ticket Created Successfully:" + res.data.newIncident.incidentNumber);
+    toast.success("Ticket Created Successfully:" + res.data.newIncident.incidentNumber);
     navigate("/incidents")
    }
    catch(err) {
     console.error(err);
-    alert("Failed to create ticket")
+    toast.error("Failed to create ticket")
+   }
+   finally {
+    setIsSubmitting(false);
    }
   }
 
@@ -154,7 +160,7 @@ const STATUS_OPTIONS = ["Open", "In-Progress", "Pending", "On-Hold"];
       onChange={(e) => handleInputChange("status", e.target.value)}
     />
   </div>
-  <button className="btn-primary" onClick={handleSubmit}>Create Incident</button>
+  <button disabled={isSubmitting} className="btn-primary" onClick={handleSubmit}>{isSubmitting ? "Saving" : "Create Incident"}</button>
   </form>
     </div>
   </div>
