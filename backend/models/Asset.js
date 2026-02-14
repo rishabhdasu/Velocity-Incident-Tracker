@@ -19,7 +19,11 @@ const AssetSchema = new mongoose.Schema(
       enum: ["Connected", "Disconnected"],
       default: "Connected",
     },
-    installedDate: { type: Date, required: true },
+    organizationId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Organization",
+          required: true
+        },
     // Site Address
     installedDate: { type: Date, required: true },
     siteName: {type: String, required: true, trim: true, uppercase:true},

@@ -20,6 +20,11 @@ const IncidentSchema = new mongoose.Schema(
       default: "open",
     },
     priority: { type: String, enum: ["low", "medium", "high", "critical"] },
+    organizationId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Organization",
+      required: true
+    }
   },
   { timestamps: true },
 );
