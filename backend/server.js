@@ -4,6 +4,7 @@ const { connectDB } = require("./config/db");
 const cors = require("cors");
 const assetRoutes = require("./routes/assetRoutes");
 const incidentRoutes = require("./routes/incidentRoutes");
+const authRoutes = require("./routes/authRoutes");
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(
 
 app.use("/api/v1/assets", assetRoutes);
 app.use("/api/v1/incidents", incidentRoutes);
+app.use("/api/v1/auth", authRoutes);
 
 app.get("/", (req, res) => {
   res.send({ message: "Server started" });
