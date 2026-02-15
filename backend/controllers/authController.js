@@ -39,7 +39,7 @@ exports.registerOrg = async(req, res) => {
 exports.login = async (req, res) => {
     try{
         const {email, password} = req.body;
-        const user = await User.findOne({email}).populate("organizationId");
+        const user = await User.findOne({email}).select("+password") .populate("organizationId");
         if(!user) return res.status(401).json({message: "Invalid email or password"});
 
         const isMatch = await user.comparePassword(password);
