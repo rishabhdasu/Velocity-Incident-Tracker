@@ -7,7 +7,6 @@ const AssetSchema = new mongoose.Schema(
       required: true,
       uppercase: true,
       trim: true,
-      unique: true,
     },
     assetName: {
       type: String,
@@ -39,5 +38,7 @@ const AssetSchema = new mongoose.Schema(
   },
   { timestamps: true },
 );
+
+AssetSchema.index({ serialNumber: 1, organizationId: 1 }, { unique: true });
 
 module.exports = mongoose.model("Asset", AssetSchema);
