@@ -29,7 +29,14 @@ exports.registerOrg = async(req, res) => {
         });
     }
     catch(error) {
-        console.error("Registration Error", error)
+        console.error("Registration Error", error);
+    if (error.code === 11000) {
+        const field = Object.keys(error.keyValue)[0];
+        return res.status(400).json({ 
+            message: `That ${field} is already registered. Please use a different one.` 
+        });
+    }
+
         return res.status(500).json({message: "Internal Server Error"});
     }
 };
@@ -57,7 +64,7 @@ exports.login = async (req, res) => {
     }
     catch(error) {
         console.error("Login Error", error);
-        res.statu(500).json({message: "Login failed"});
+        res.status(500).json({message: "Login failed"});
     }
 };
 

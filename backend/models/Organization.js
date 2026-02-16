@@ -17,7 +17,7 @@ const OrganizationSchema = new mongoose.Schema({
         required: true,
         type: String,
         enum: ["free", "pro", "enterprise"],
-        defalt: "free"
+        default: "free"
     },
     isActive: {
         type: Boolean,
