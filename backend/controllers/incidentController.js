@@ -3,6 +3,7 @@ const Asset = require("../models/Asset");
 const xlsx = require("xlsx");
 const Counter = require("../models/Counter");
 
+
 // Create Incident Controller
 exports.createIncident = async (req, res) => {
   try {
@@ -16,6 +17,7 @@ exports.createIncident = async (req, res) => {
       status : status.toLowerCase(),
       priority : priority.toLowerCase(),
       asset: assetId,
+      organizationId: req.user.organizationId
     });
     await newIncident.save();
     res
@@ -32,7 +34,7 @@ exports.createIncident = async (req, res) => {
 // Get All Incidents
 exports.getAllIncident = async (req, res) => {
   try {
-    const allIncidents = (await Incident.find().populate("asset").sort({createdAt: -1}));
+    const allIncidents = (await Incident.find({organizationId: req.user.organizationId}).populate("asset").sort({createdAt: -1}));
     res.status(200).json(allIncidents);
   } catch (err) {
     res.status(500).json({ message: "Something went wrong. Please try again" });
@@ -42,7 +44,7 @@ exports.getAllIncident = async (req, res) => {
 // Download Incident
 exports.downloadIncidentExcel = async (req, res) => {
   try {
-    const incident = await Incident.find().populate("asset");
+    const incident = await Incident.find({organizationId: req.user.organizationId}).populate("asset");
     const data = incident.map((inc) => ({
       "Serial Number": inc.asset ? inc.asset.serialNumber : "N/A",
       "Date Created": new Date(inc.createdAt).toLocaleString(),

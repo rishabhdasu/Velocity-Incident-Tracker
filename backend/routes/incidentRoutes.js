@@ -5,8 +5,11 @@ const {
   downloadIncidentExcel,
 } = require("../controllers/incidentController");
 const { previewController } = require("../controllers/previewController");
+const { protect } = require("../middlewares/authMiddleware");
+
 
 const router = express.Router();
+router.use(protect);
 
 router.get("/preview-number", previewController);
 router.post("/create", createIncident);

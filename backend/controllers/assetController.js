@@ -43,18 +43,22 @@ exports.addAsset = async (req, res) => {
       state,
       postalCode,
       country,
+      organizationId: req.user.organizationId
     });
     await newAsset.save();
     res.status(201).json({ message: "Asset added successfully", newAsset });
   } catch (err) {
     console.error("ADD_ASSET_ERROR:", err);
+      if (err.code === 11000) {
+      return res.status(400).json({ message: "An asset with this serial number already exists in your organization." });
+    }
     return res.status(500).json({ message: "Server Error" });
   }
 };
 
 exports.getAllAsset = async (req, res) => {
   try { 
-    const asset = await Asset.find();
+    const asset = await Asset.find({organizationId: req.user.organizationId});
     return res.status(200).json(asset);
   } catch (err) {
     res.status(500).json({ message: "Something went wrong, please try again" });
@@ -64,7 +68,9 @@ exports.getAllAsset = async (req, res) => {
 exports.getAssetBySerial= async (req, res) => {
   try {
     const {serialNumber } = req.params;
-    const asset = await Asset.findOne({serialNumber: serialNumber.trim().toUpperCase()});
+    const asset = await Asset.findOne(
+      {serialNumber: serialNumber.trim().toUpperCase(), 
+      organizationId: req.user.organizationId});
       if (!asset) {
       return res.status(404).json({ message: "Asset not found" });
     }
@@ -76,7 +82,7 @@ exports.getAssetBySerial= async (req, res) => {
 
 exports.downloadAssetExcel = async (req, res) => {
   try {
-    const asset = await Asset.find();
+    const asset = await Asset.find({organizationId: req.user.organizationId});
     const data = asset.map((item) => ({
       "Serial Number": item.serialNumber,
       "Asset Name": item.assetName,
